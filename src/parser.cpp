@@ -8,16 +8,38 @@
 namespace boxer::parser {
 
 	// ctor
-	Parser::Parser(string_t path) : filename(path) { }
+	/**
+	 * Preconditions:
+	 * 	- File exists.
+	 */
+	Parser::Parser(string_t path) : filename(path){ 
+		const size_t last_slash_idx = path.rfind('/');
+		if (std::string::npos != last_slash_idx)
+		{
+		       working_dir = path.substr(0, last_slash_idx);
+		}
+
+		log_dbg("File:" + filename + "WD:" + working_dir)
+		 
+		commandFactory = std::make_shared<boxer::commands::CommandFactory>();
+		
+	}
 
 	// Start point of processing file.
 	bool_t Parser::processFile() {
 		if(!readFile()) {
-			std::cout << "Can NOT process file" << std::endl;
+			log_war("Can NOT process file")
 			exit(1);
 		}
 
-		printContents();
+		// printContents();
+		
+		std::for_each(contentsOfFile.begin(), contentsOfFile.end(),
+				[&](const string_t& fileline) {
+					getCommandFromLine(fileline);
+				});		
+		
+		// start making sense of each line
 
 		return true;
 	}
@@ -35,7 +57,7 @@ namespace boxer::parser {
 		 
 		// Check if object is valid
 		if(!in) {
-			std::cerr << "Cannot open the File : " << filename << std::endl;
+			log_err("Cannot open the File : " + filename);
 			return false;
 		}
 	 								 
@@ -55,7 +77,37 @@ namespace boxer::parser {
 
 	auto Parser::printContents() -> void {
 		for (auto const& c : contentsOfFile)
-			std::cout << c << std::endl;
+			log_dbg(c)
 	}
 
-}
+	auto Parser::getCommandFromLine(string_t line) -> void {
+		// Ignore line if it is a comment.
+		if (boxer::string::beginsWith(line, "#")) {
+			log_inf("Ignore comment")
+			return;
+		}
+
+		stringvec_t words = boxer::string::split(line, " ");
+
+		if (words.size() <= 0) {
+			return;
+		}
+
+		log_dbg("Line:")
+		log_dbg(line)
+		log_dbg("Words:")
+	        std::for_each(words.begin(),words.end(), [](const string_t &s){
+				log_dbg(s)
+				});
+
+		log_dbg("")
+		if (words.size() < 1) {
+			return; 
+		}	
+
+		commandFactory->createCommand(words);
+	}
+
+} // namespace boxer::parser
+
+
