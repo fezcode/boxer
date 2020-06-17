@@ -28,12 +28,18 @@ auto getAvailableCommands()-> void {
 }
 
 auto main(int argc, char **argv) -> int {
-	boxer::archiver::createTar();
+	// boxer::archiver::createTar();
+	// exit(1);
+
+	asbuzz::archiver::Tar tar("my_arch.tar");
+	tar.open();
+
+	// Beware of leading `/` in archive filenames
+	tar.addFile("/mnt/c/Repos/boxer/test-files/test_wrong.txt", "test_wrong.txt");
+	tar.addFile("/mnt/c/Repos/boxer/test-files/test1.txt", "cc/test1.txt");
+	tar.addFile("/mnt/c/Repos/boxer/test-files/test2.txt", "test2.txt");
+	tar.close();
 	exit(1);
-
-
-
-
 
 	string_t filename;
 	static struct option long_options[] =

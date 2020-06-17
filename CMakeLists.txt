@@ -2,9 +2,7 @@ cmake_minimum_required (VERSION 3.8)
 
 project(boxer CXX)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS " -pthread " )
-
-add_subdirectory(include/lindenb/)
+set(CMAKE_CXX_FLAGS " -pthread -ggdb" )
 
 link_libraries(stdc++fs)
 include_directories(
@@ -12,7 +10,6 @@ include_directories(
 	src
 	/usr/include
 	/usr/local/include
-	include
 )
 
 link_directories(
@@ -37,12 +34,12 @@ add_executable(boxer
 	)
 
 # Find a tar library.
-find_library(TAR_LIBRARY_PATH NAMES libchilkat-9.5.0.a PATHS ${PROJECT_SOURCE_DIR}/lib NO_DEFAULT_PATH)
-add_library(TAR_LIB STATIC IMPORTED)
-set_property(TARGET TAR_LIB PROPERTY IMPORTED_LOCATION ${TAR_LIBRARY_PATH})
+# find_library(TAR_LIBRARY_PATH NAMES libchilkat-9.5.0.a PATHS ${PROJECT_SOURCE_DIR}/lib NO_DEFAULT_PATH)
+# add_library(TAR_LIB STATIC IMPORTED)
+# set_property(TARGET TAR_LIB PROPERTY IMPORTED_LOCATION ${TAR_LIBRARY_PATH})
 
-message("Project Source Dir " ${PROJECT_SOURCE_DIR})
-message("Tar lib location " ${TAR_LIBRARY_PATH})
+# message("Project Source Dir " ${PROJECT_SOURCE_DIR})
+# message("Tar lib location " ${TAR_LIBRARY_PATH})
 
 # Link libraries.
-target_link_libraries(boxer pthread TAR_LIB)
+target_link_libraries(boxer pthread)
