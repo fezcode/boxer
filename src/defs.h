@@ -16,6 +16,7 @@
 using string_t = std::string;
 using bool_t = bool;
 using stringvec_t = std::vector<std::string>;
+using charvec_t = std::vector<char>;
 using ifstream_t = std::ifstream;
 
 #define pairListKeyString(T) std::list<std::pair<T, string_t>>
@@ -24,15 +25,15 @@ using ifstream_t = std::ifstream;
 #ifdef DEBUG
 // COUT Logs
 #define __FILENAME__ (__builtin_strrchr(__FILE__, '/') ? __builtin_strrchr(__FILE__, '/') + 1 : __FILE__)
-#define log_err( T ) std::cerr << CL_RED    << "~[err] [" << __FILENAME__ << "->" << __func__ << ":" << __LINE__ << "] " << T << CL_RESET << std::endl;
-#define log_war( T ) std::cout << CL_YELLOW << "~[war] [" << __FILENAME__ << "->" << __func__ << ":" << __LINE__ << "] " << T << CL_RESET << std::endl;
-#define log_inf( T ) std::cout << CL_GREEN  << "~[inf] [" << __FILENAME__ << "->" << __func__ << ":" << __LINE__ << "] " << T << CL_RESET << std::endl;
-#define log_dbg( T ) std::cout << CL_BLUE   << "~[dbg] [" << __FILENAME__ << "->" << __func__ << ":" << __LINE__ << "] " << T << CL_RESET << std::endl;
+#define log_err( T ) std::cerr << CL_RED    << "~[err] [" << __FILENAME__ << "->" << __func__ << ":" << __LINE__ << "] " << T << CL_RESET << std::endl
+#define log_war( T ) std::cout << CL_YELLOW << "~[war] [" << __FILENAME__ << "->" << __func__ << ":" << __LINE__ << "] " << T << CL_RESET << std::endl
+#define log_inf( T ) std::cout << CL_GREEN  << "~[inf] [" << __FILENAME__ << "->" << __func__ << ":" << __LINE__ << "] " << T << CL_RESET << std::endl
+#define log_dbg( T ) std::cout << CL_BLUE   << "~[dbg] [" << __FILENAME__ << "->" << __func__ << ":" << __LINE__ << "] " << T << CL_RESET << std::endl
 #else
-#define log_err( T ) std::cerr << CL_RED    << " " << T << CL_RESET << std::endl;
-#define log_war( T ) std::cout << CL_YELLOW << " " << T << CL_RESET << std::endl;
-#define log_inf( T ) std::cout << CL_GREEN  << " " << T << CL_RESET << std::endl;
-#define log_dbg( T ) std::cout << CL_BLUE   << " " << T << CL_RESET << std::endl;
+#define log_err( T ) std::cerr << CL_RED    << " " << T << CL_RESET << std::endl
+#define log_war( T ) std::cout << CL_YELLOW << " " << T << CL_RESET << std::endl
+#define log_inf( T ) std::cout << CL_GREEN  << " " << T << CL_RESET << std::endl
+#define log_dbg( T ) std::cout << CL_BLUE   << " " << T << CL_RESET << std::endl
 #endif
 
 // Colors

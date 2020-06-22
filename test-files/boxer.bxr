@@ -1,3 +1,7 @@
 # Comment
 
+# Sets archive name.
+ARCHIVE_NAME my_archive
+
+# Adds single file to archive
 ADD_FILE tempfile.txt

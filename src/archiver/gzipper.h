@@ -22,7 +22,6 @@ namespace asbuzz::archiver {
 #define GZIP_ENCODING 16	
 
 	class GZipper {
-		
 	private:
 		std::string source_filename;
 		std::string dest_filename;
@@ -35,11 +34,10 @@ namespace asbuzz::archiver {
 	public:
 		GZipper(std::string SourceFilename, std::string DistFilename) :
 					source_filename(SourceFilename), dest_filename(DistFilename) { }
-
 		~GZipper() {}
 
 		auto compress() -> bool;
-	
+		auto cleanup()  -> bool;
 	};
 	
 	// private methods
@@ -140,6 +138,17 @@ namespace asbuzz::archiver {
 		if (def() == Z_OK)
 			return true;
 		return false;
+	}
+
+	/** Remove source file */
+	inline auto GZipper::cleanup() -> bool {
+		if (remove(source_filename.c_str())  != 0 ) {
+			log_err("File delete error");
+			return false;
+		} else {
+			log_dbg(source_filename + " is deleted succesfully");
+			return true;
+		}
 	}
 		
 } // namespace asbuzz::archiver

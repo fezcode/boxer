@@ -1,5 +1,4 @@
 #include "command.h"
-#include <unistd.h>
 
 namespace boxer::commands {
 
@@ -11,9 +10,7 @@ namespace boxer::commands {
 		auto buildup() -> bool_t;
 
 	protected:
-		inline auto fileExists(string_t filename) -> bool_t {
-			return ( access(filename.c_str(), 0 ) == 0 );
-		}
+		bool_t destNameParamExists = false;
 
 	};
 

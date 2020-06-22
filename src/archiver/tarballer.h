@@ -131,7 +131,6 @@ namespace asbuzz::archiver {
 #ifdef ASBUZZ_ARCHIVER_DEBUG	
 				if(!isFinished) std::cerr << "archive creation did NOT finished properly" << std::endl;
 #endif
-
 			};
 
 			auto open() -> bool;

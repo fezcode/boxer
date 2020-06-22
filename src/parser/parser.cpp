@@ -19,7 +19,7 @@ namespace boxer::parser {
 		       working_dir = path.substr(0, last_slash_idx);
 		}
 
-		log_dbg("File:" + filename + "WD:" + working_dir)
+		log_dbg("File:" + filename + "WD:" + working_dir);
 		 
 		commandFactory = std::make_shared<boxer::commands::CommandFactory>();
 		
@@ -28,7 +28,7 @@ namespace boxer::parser {
 	// Start point of processing file.
 	bool_t Parser::processFile() {
 		if(!readFile()) {
-			log_war("Can NOT process file")
+			log_war("Can NOT process file");
 			exit(1);
 		}
 
@@ -77,13 +77,13 @@ namespace boxer::parser {
 
 	auto Parser::printContents() -> void {
 		for (auto const& c : contentsOfFile)
-			log_dbg(c)
+			log_dbg(c);
 	}
 
 	auto Parser::getCommandFromLine(string_t line) -> void {
 		// Ignore line if it is a comment.
 		if (boxer::string::beginsWith(line, "#")) {
-			log_inf("Ignore comment")
+			log_inf("Ignore comment");
 			return;
 		}
 
@@ -93,14 +93,14 @@ namespace boxer::parser {
 			return;
 		}
 
-		log_dbg("Line:")
-		log_dbg(line)
-		log_dbg("Words:")
+		log_dbg("Line:");
+		log_dbg(line);
+		log_dbg("Words:");
 	        std::for_each(words.begin(),words.end(), [](const string_t &s){
-				log_dbg(s)
+				log_dbg(s);
 				});
 
-		log_dbg("")
+		log_dbg("");
 		if (words.size() < 1) {
 			return; 
 		}	

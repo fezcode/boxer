@@ -2,15 +2,19 @@
 // Ahmed Samil Bulbul
 // Boxer parser
 //===========================================
-#include "main.h"
+
+#include "defs.h"
+#include <iostream>
+#include <filesystem>
 #include <getopt.h>
 #include <unistd.h>
-// #include <zlib/zlib.h>
 #include "archiver/tarballer.h"
 #include "archiver/gzipper.h"
+#include "utils/string_utils.h"
+#include "parser/parser.h"
 
 auto getHelp() -> void {
-	log_err("Help is requested but cannot give a shit about it right now.")
+	log_err("Help is requested but cannot give a shit about it right now.");
 	exit(1);
 }
 
@@ -25,12 +29,17 @@ auto getAvailableCommands()-> void {
      Default is RELATIVE.
 
  )";
+
 	std::cout << commands << std::endl;
 }
 
 auto main(int argc, char **argv) -> int {
-	// boxer::archiver::createTar();
-	// exit(1);
+	
+	string_t randomString = boxer::string::generateRandomString(600);
+	log_dbg("Random String");
+	log_dbg(randomString);
+
+	exit(1);
 
 	asbuzz::archiver::Tar tar("my_arch.tar");
 	tar.open();
@@ -43,6 +52,7 @@ auto main(int argc, char **argv) -> int {
 
 	asbuzz::archiver::GZipper gzip("my_arch.tar", "my_arch.tar.gz");
 	gzip.compress();
+	gzip.cleanup();
 
 	exit(1);
 
@@ -81,19 +91,19 @@ auto main(int argc, char **argv) -> int {
 
 	if (filename.empty())
 	{
-		log_err("Filename is not given.")
+		log_err("Filename is not given.");
 		exit(1);
 	} 
 	else if ( access(filename.c_str(), 0) != 0 ) {
-		log_err("Given file does NOT exist")
+		log_err("Given file does NOT exist");
 		exit(1);
 	}
 
 	auto cwd = std::filesystem::current_path();
-	log_dbg("Current Working Directory: " + string_t(cwd))
+	log_dbg("Current Working Directory: " + string_t(cwd));
 	
 	auto fullPath = string_t(realpath(filename.c_str(), NULL));
-	log_dbg("Working Filename: " + fullPath)
+	log_dbg("Working Filename: " + fullPath);
 
 	auto parser = std::make_shared<boxer::parser::Parser>(fullPath);
 	parser->processFile();

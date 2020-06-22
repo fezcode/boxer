@@ -1,5 +1,6 @@
 #pragma once
 #include "../defs.h"
+#include <unistd.h>
 
 namespace boxer::commands {
 
@@ -24,5 +25,9 @@ namespace boxer::commands {
 		// This one determines if given command is valid.
 		// There might be a couple of reason why command may not be valid.
 		bool_t   isValid;
+
+		inline auto fileExists(string_t filename) -> bool_t {
+			return ( access(filename.c_str(), 0 ) == 0 );
+		}
 	};
 }

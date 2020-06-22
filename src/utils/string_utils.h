@@ -9,8 +9,15 @@
 #include <vector>
 #include <algorithm>
 #include "../defs.h"
+#include <ctime>
+#include <random>
+#include <functional>
+#include <chrono>
+
 
 namespace boxer::string {
+
+	static const char letters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 	static stringvec_t split (string_t s, string_t delimiter) {
 		size_t pos_start = 0, pos_end, delim_len = delimiter.length();
@@ -37,6 +44,26 @@ namespace boxer::string {
 
 	static auto beginsWith(const string_t &str, const string_t &pattern ) -> bool_t {
 		return (str.rfind(pattern, 0) == 0);
+	}
+
+	// What is mkstemp, what is tmpnam...
+	static auto generateRandomString(const size_t & length ) -> string_t {
+		charvec_t randomName;
+		size_t newLength = length;
+
+		if (length > 512) {
+			log_dbg("512 is the maximum size for random name. Let's not overdo this.");
+			newLength = 512;
+		}
+		 
+		// use high res clock in order to provide actual seed. time(0) sucks big time.
+		std::mt19937::result_type seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+		auto integer_rand = std::bind(std::uniform_int_distribution<int>(0,61), std::mt19937(seed));
+
+		for (uint i = 0; i < newLength; ++i )
+			randomName.push_back(letters[integer_rand()]);
+	
+		return string_t(randomName.begin(), randomName.end()); 
 	}
 
 } //namespace boxer::string
