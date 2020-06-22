@@ -125,7 +125,9 @@ namespace asbuzz::archiver {
 		public:
 			Tar(std::string filename) : outputFilename(filename) { };
 			~Tar() {
-
+				if(output.is_open()) {
+					output.close();
+				}
 #ifdef ASBUZZ_ARCHIVER_DEBUG	
 				if(!isFinished) std::cerr << "archive creation did NOT finished properly" << std::endl;
 #endif

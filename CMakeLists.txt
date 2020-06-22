@@ -10,6 +10,7 @@ include_directories(
 	src
 	/usr/include
 	/usr/local/include
+	include
 )
 
 link_directories(
@@ -33,13 +34,17 @@ add_executable(boxer
 	${SOURCES}	
 	)
 
-# Find a tar library.
-# find_library(TAR_LIBRARY_PATH NAMES libchilkat-9.5.0.a PATHS ${PROJECT_SOURCE_DIR}/lib NO_DEFAULT_PATH)
-# add_library(TAR_LIB STATIC IMPORTED)
-# set_property(TARGET TAR_LIB PROPERTY IMPORTED_LOCATION ${TAR_LIBRARY_PATH})
+# Find a zlib library.
+find_library(ZLIB_LIBRARY_PATH NAMES libz.so PATHS ${PROJECT_SOURCE_DIR}/lib NO_DEFAULT_PATH)
+add_library(CUSTOM_ZLIB_LIBRARY SHARED IMPORTED)
+set_property(TARGET CUSTOM_ZLIB_LIBRARY PROPERTY IMPORTED_LOCATION ${ZLIB_LIBRARY_PATH})
 
-# message("Project Source Dir " ${PROJECT_SOURCE_DIR})
-# message("Tar lib location " ${TAR_LIBRARY_PATH})
+message("Project Source Dir " ${PROJECT_SOURCE_DIR})
+message("zlib location " ${ZLIB_LIBRARY_PATH})
+message("zlib: " ${ZLIB_LIBRARY})
 
 # Link libraries.
-target_link_libraries(boxer pthread)
+target_link_libraries(boxer pthread CUSTOM_ZLIB_LIBRARY)
+
+get_target_property(OUT boxer LINK_LIBRARIES)
+message(STATUS ${OUT} )

@@ -6,7 +6,8 @@
 #include <getopt.h>
 #include <unistd.h>
 // #include <zlib/zlib.h>
-#include "archiver/archiver.h"
+#include "archiver/tarballer.h"
+#include "archiver/gzipper.h"
 
 auto getHelp() -> void {
 	log_err("Help is requested but cannot give a shit about it right now.")
@@ -39,6 +40,10 @@ auto main(int argc, char **argv) -> int {
 	tar.addFile("/mnt/c/Repos/boxer/test-files/test1.txt", "cc/test1.txt");
 	tar.addFile("/mnt/c/Repos/boxer/test-files/test2.txt", "test2.txt");
 	tar.close();
+
+	asbuzz::archiver::GZipper gzip("my_arch.tar", "my_arch.tar.gz");
+	gzip.compress();
+
 	exit(1);
 
 	string_t filename;
@@ -83,7 +88,6 @@ auto main(int argc, char **argv) -> int {
 		log_err("Given file does NOT exist")
 		exit(1);
 	}
-
 
 	auto cwd = std::filesystem::current_path();
 	log_dbg("Current Working Directory: " + string_t(cwd))
