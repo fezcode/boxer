@@ -19,7 +19,12 @@ using stringvec_t = std::vector<std::string>;
 using charvec_t = std::vector<char>;
 using ifstream_t = std::ifstream;
 
-#define pairListKeyString(T) std::list<std::pair<T, string_t>>
+#define pairListKeyString(T) std::list<std::pair<string_t, T>>
+#define sharedPtr(T) std::shared_ptr<T>
+#define command_ptr std::shared_ptr<boxer::commands::Command>
+#define command_list_t std::list<std::shared_ptr<boxer::commands::Command>>
+#define tar_t std::shared_ptr<asbuzz::archiver::Tar>
+#define gzip_t std::shared_ptr<asbuzz::archiver::GZipper>
 
 
 #ifdef DEBUG

@@ -111,7 +111,9 @@ namespace asbuzz::archiver {
 		private:
 			/* This flag is used to check whether initialization
 			   of tar file; started, used internally */
-			bool isFinished;
+			bool finished;
+			bool startable;
+			bool started;
 			std::string outputFilename;
 			std::ofstream output;
 
@@ -123,20 +125,23 @@ namespace asbuzz::archiver {
 
 
 		public:
-			Tar(std::string filename) : outputFilename(filename) { };
+			Tar() : startable(false), started(false) { };
+			Tar(std::string filename) : outputFilename(filename), startable(true), started(false) { };
 			~Tar() {
 				if(output.is_open()) {
 					output.close();
 				}
 #ifdef ASBUZZ_ARCHIVER_DEBUG	
-				if(!isFinished) std::cerr << "archive creation did NOT finished properly" << std::endl;
+				if(!finished) std::cerr << "archive creation did NOT finished properly" << std::endl;
 #endif
 			};
 
 			auto open() -> bool;
-			auto addFile(std::string original_filename, std::string archive_filename) -> bool;
 			auto close() -> bool;
-			
+			auto isStarted() -> bool;
+			auto setName(std::string name) -> void;
+			auto getName() -> std::string;
+			auto addFile(std::string original_filename, std::string archive_filename) -> bool;		
 	};
 
 	// Initalize a record.
@@ -210,6 +215,11 @@ namespace asbuzz::archiver {
 
 	/* Open tar file */
 	inline auto Tar::open() -> bool {
+		if (!startable) {
+			std::cerr << "File name is not given. Call setName method first." << std::endl ;
+			return false;
+		}
+
 		std::string arch_filename = (outputFilename.empty() ? "temp_archive.tar" : outputFilename);
 		output = std::ofstream(arch_filename);
 
@@ -218,12 +228,14 @@ namespace asbuzz::archiver {
 			return false;
 		}
 
+		started = true;
+
 		return true;
 	}
 
 	/* To complete a tar archive, append 2 empty blocks to the end of stream*/
 	inline auto Tar::close() -> bool {
-		isFinished = true;
+		finished = true;
 		posix_header empty_header;
 		
 		std::memset((void*)&empty_header,0,sizeof(posix_header));
@@ -235,7 +247,18 @@ namespace asbuzz::archiver {
 		output.close();
 
 		return true;
+	}
 
+	inline auto Tar::isStarted() -> bool {
+		return started;
+	}
+
+	inline auto Tar::setName(std::string name) -> void {
+		outputFilename = name;
+	}
+
+	inline auto Tar::getName() -> std::string {
+		return outputFilename;
 	}
 
 	inline auto Tar::addFile(std::string original_filename, std::string archive_filename) -> bool {

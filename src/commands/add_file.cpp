@@ -3,7 +3,7 @@
 
 namespace boxer::commands {
 
-	Add_File::Add_File(string_t Name, stringvec_t Payload) : Command(Name, Payload) 
+	Add_File::Add_File(stringvec_t Payload) : Command(ADD_FILE, Payload) 
 	{
 		isValid = false;
 	}
@@ -28,7 +28,8 @@ namespace boxer::commands {
 			return true;
 		
 		} else if (payload.size() == 4) {
-			if (boxer::string::iequals(name, "AS")) {
+			
+			if (boxer::string::iequals(payload[2], "AS")) { 
 				destNameParamExists = true;
 				isValid = true;
 				return true;
@@ -38,9 +39,9 @@ namespace boxer::commands {
 		return false;	
 	}
 	
-	auto Add_File::execute() -> bool_t {
-
-		return false;	
+	auto Add_File::execute(const tar_t & tar) -> result::CommandResult {
+		
+		return result::CommandResult();	
 	}
 }
 

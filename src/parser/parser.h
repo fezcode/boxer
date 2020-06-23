@@ -2,6 +2,7 @@
 // Parser.h
 //===================================
 
+#pragma once
 #include "defs.h"
 #include "utils/string_utils.h"
 #include <algorithm>
@@ -9,29 +10,24 @@
 
 namespace boxer::parser {
 
-	enum Commands {
-		COMMAND_NONE,
-		ADD_FILE,
-		ADD_DIR,
-		COMMAND_MAX
-	};
-
 	class Parser {
 	public:
 		Parser(string_t path);
-		bool_t processFile();
+		auto processFile() -> bool_t;
+		auto retrieveCommands() -> command_list_t;
 
 	private:
 		string_t filename;
 		string_t working_dir;
 		stringvec_t contentsOfFile;
-		pairListKeyString(Commands) commands;
+		command_list_t commands_list;
 		std::shared_ptr<boxer::commands::CommandFactory> commandFactory;
 
 		// functions
 		auto readFile() -> bool_t;
 		auto printContents() -> void;
 		auto getCommandFromLine(string_t line) -> void;
+		
 	};
 }
 

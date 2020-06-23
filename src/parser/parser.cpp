@@ -22,7 +22,6 @@ namespace boxer::parser {
 		log_dbg("File:" + filename + "WD:" + working_dir);
 		 
 		commandFactory = std::make_shared<boxer::commands::CommandFactory>();
-		
 	}
 
 	// Start point of processing file.
@@ -32,8 +31,6 @@ namespace boxer::parser {
 			exit(1);
 		}
 
-		// printContents();
-		
 		std::for_each(contentsOfFile.begin(), contentsOfFile.end(),
 				[&](const string_t& fileline) {
 					getCommandFromLine(fileline);
@@ -62,8 +59,7 @@ namespace boxer::parser {
 		}
 	 								 
 	 	string_t str;
-		// Read the next line from File untill it reaches the end.
-		//
+		// Read the next line from File until it reaches the end.
 		while (std::getline(in, str)) {
 		// Line contains string of length > 0 then save it in vector
 		if(str.size() > 0)
@@ -105,9 +101,12 @@ namespace boxer::parser {
 			return; 
 		}	
 
-		commandFactory->createCommand(words);
+		auto command = commandFactory->createCommand(words);
+		commands_list.push_back(command);
+	}
+
+	auto Parser::retrieveCommands() -> command_list_t {
+		return commands_list;
 	}
 
 } // namespace boxer::parser
-
-

@@ -12,6 +12,7 @@
 #include "archiver/gzipper.h"
 #include "utils/string_utils.h"
 #include "parser/parser.h"
+#include "executor/executor.h"
 
 auto getHelp() -> void {
 	log_err("Help is requested but cannot give a shit about it right now.");
@@ -108,5 +109,8 @@ auto main(int argc, char **argv) -> int {
 	auto parser = std::make_shared<boxer::parser::Parser>(fullPath);
 	parser->processFile();
 
+	command_list_t all_commands = parser->retrieveCommands();
+	auto executor = std::make_shared<boxer::executor::Executor>(all_commands, boxer::string::generateRandomString(128));
+	
 	return 0;
 }
