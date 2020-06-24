@@ -14,7 +14,7 @@ namespace boxer::commands {
 
 	class CommandFactory {
 	public:
-		auto createCommand(stringvec_t payload) -> command_ptr; 
+		auto createCommand(stringvec_t payload, string_t working_dir) -> command_ptr; 
 	};
 
 } // namespace boxer::commands

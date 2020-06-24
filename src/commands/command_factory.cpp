@@ -12,7 +12,7 @@ namespace boxer::commands {
 	 * 	- payload's first string must be name of command
 	 * 	- payload's size should be greater than 0
 	 */
-	auto CommandFactory::createCommand(stringvec_t payload) -> command_ptr {
+	auto CommandFactory::createCommand(stringvec_t payload, string_t working_dir) -> command_ptr {
 		string_t name = payload[0];
 		std::shared_ptr<Command> command;
 		
@@ -23,12 +23,12 @@ namespace boxer::commands {
 
 		// ADD_FILE
 		else if (boxer::string::iequals(name, type_str(ADD_FILE))) {
-			command = std::make_shared<Add_File>(payload);
+			command = std::make_shared<Add_File>(payload, working_dir);
 		}
 
 		// ADD_DIR
 		else if (boxer::string::iequals(name,  type_str(ADD_DIR))) {
-
+			command = std::make_shared<Add_Dir>(payload, working_dir);
 		}
 
 		command->buildup();

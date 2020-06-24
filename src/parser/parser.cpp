@@ -7,20 +7,15 @@
 
 namespace boxer::parser {
 
-	// ctor
 	/**
+	 * Ctor
 	 * Preconditions:
 	 * 	- File exists.
 	 */
 	Parser::Parser(string_t path) : filename(path){ 
-		const size_t last_slash_idx = path.rfind('/');
-		if (std::string::npos != last_slash_idx)
-		{
-		       working_dir = path.substr(0, last_slash_idx);
-		}
-
-		log_dbg("File:" + filename + "WD:" + working_dir);
-		 
+		working_dir = boxer::string::getParentPath(path);
+		log_dbg("File:" + filename);
+		log_dbg("Working Directory:" + working_dir);
 		commandFactory = std::make_shared<boxer::commands::CommandFactory>();
 	}
 
@@ -79,7 +74,7 @@ namespace boxer::parser {
 	auto Parser::getCommandFromLine(string_t line) -> void {
 		// Ignore line if it is a comment.
 		if (boxer::string::beginsWith(line, "#")) {
-			log_inf("Ignore comment");
+			log_dbg("Ignore comment");
 			return;
 		}
 
@@ -89,24 +84,28 @@ namespace boxer::parser {
 			return;
 		}
 
-		log_dbg("Line:");
-		log_dbg(line);
-		log_dbg("Words:");
-	        std::for_each(words.begin(),words.end(), [](const string_t &s){
-				log_dbg(s);
-				});
+		log_dbg("Line: " + line);
+		
+		// log_dbg("Words:");
+	    //     std::for_each(words.begin(),words.end(), [](const string_t &s){
+		// 		log_dbg(s);
+		// 		});
 
 		log_dbg("");
 		if (words.size() < 1) {
 			return; 
 		}	
 
-		auto command = commandFactory->createCommand(words);
+		auto command = commandFactory->createCommand(words, working_dir);
 		commands_list.push_back(command);
 	}
 
 	auto Parser::retrieveCommands() -> command_list_t {
 		return commands_list;
+	}
+
+	auto Parser::getWorkingDir() -> string_t {
+		return working_dir;
 	}
 
 } // namespace boxer::parser

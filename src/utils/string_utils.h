@@ -13,7 +13,8 @@
 #include <random>
 #include <functional>
 #include <chrono>
-
+#include <string.h>
+#include <filesystem>
 
 namespace boxer::string {
 
@@ -46,6 +47,10 @@ namespace boxer::string {
 		return (str.rfind(pattern, 0) == 0);
 	}
 
+	static auto endsWith(const string_t &str, const string_t &pattern ) -> bool_t {
+		return str.rfind(pattern) == std::abs( (long long int)(str.size() - pattern.size()) );
+	}
+
 	// What is mkstemp, what is tmpnam...
 	static auto generateRandomString(const size_t & length ) -> string_t {
 		charvec_t randomName;
@@ -64,6 +69,30 @@ namespace boxer::string {
 			randomName.push_back(letters[integer_rand()]);
 	
 		return string_t(randomName.begin(), randomName.end()); 
+	}
+
+	static auto getBasename(string_t path) -> string_t {
+		return string_t(basename(path.c_str()));
+	}
+
+	static auto getParentPath(string_t path) -> string_t {
+		std::filesystem::path p(path);
+		return p.parent_path().string();
+	}
+
+	static auto isAbsolutePath(string_t path) -> bool_t {
+		std::filesystem::path p(path);
+		return p.is_absolute();
+	}
+
+	static auto isFilenameValid(string_t name) -> bool_t {
+		char illegals[] = {'\0', '\\', '/', ':', '*', '\"', '<', '>', '|', '$', '&' };
+		for (char c : illegals) {
+			if (name.find(c) != std::string::npos)
+				return false;
+		}
+		
+		return true;
 	}
 
 } //namespace boxer::string

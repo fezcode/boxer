@@ -2,13 +2,13 @@
 
 namespace boxer::commands {
 
-	/** ADD_FILE 
-	 * Format ADD_FILE <FILENAME> [AS <OUTPUT_FILENAME> ]
+	/** ADD_DIR 
+	 * Format ADD_DIR <FILENAME> [AS <OUTPUT_FILENAME> ]
 	 */
-	class Add_File : public Command {
+	class Add_Dir : public Command {
 	public:
-		Add_File(stringvec_t Payload, string_t Working_Dir);
-		virtual ~Add_File();
+		Add_Dir(stringvec_t Payload, string_t Working_Dir);
+		virtual ~Add_Dir();
 		auto execute(const tar_t & tar) -> result::CommandResult;
 		auto buildup() -> bool_t;
 
@@ -17,7 +17,6 @@ namespace boxer::commands {
 		string_t source_filename;
 		string_t dest_filename;
 		bool_t custom_dest_given = false;
-		
 	};
 
 }

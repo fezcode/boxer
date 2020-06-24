@@ -273,7 +273,7 @@ namespace asbuzz::archiver {
 		std::streamsize length = fs.tellg();
 		fs.seekg(0, fs.beg);
 
-		std::cout << "Input length:" << length << std::endl;
+		// std::cout << "Input length:" << length << std::endl;
 
 		std::shared_ptr<posix_header> header = std::make_shared<posix_header>();
 		record_init(header);

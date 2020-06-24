@@ -1,7 +1,12 @@
-# Comment
+# File Version
+# BOXER_VERSION 1
 
 # Sets archive name.
-ARCHIVE_NAME my_archive
+ARCHIVE_NAME fuck_yea 
 
 # Adds single file to archive
-ADD_FILE tempfile.txt
+ADD_FILE test1.txt
+ADD_FILE test2.txt AS pepe_pupu.txt
+
+# Adds contents of the folder.
+ADD_DIR folder AS kool

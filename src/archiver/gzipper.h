@@ -33,7 +33,10 @@ namespace asbuzz::archiver {
 		auto def() -> int;
 	public:
 		GZipper(std::string SourceFilename, std::string DistFilename) :
-					source_filename(SourceFilename), dest_filename(DistFilename) { }
+					source_filename(SourceFilename), dest_filename(DistFilename) { 
+						log_inf("Source : " + source_filename);
+						log_inf("Dest   : " + dest_filename);
+					}
 		~GZipper() {}
 
 		auto compress() -> bool;

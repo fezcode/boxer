@@ -35,7 +35,19 @@ auto getAvailableCommands()-> void {
 }
 
 auto main(int argc, char **argv) -> int {
+
+#ifdef TEST_IS_REQ
+	std::cout << std::boolalpha << boxer::string::isFilenameValid("bar") << std::endl;
+	std::cout << std::boolalpha << boxer::string::isFilenameValid("$$bilyo.ext") << std::endl;
 	
+	exit(1);
+
+	std::cout << boxer::string::getBasename("/foo/bar") << "==" << boxer::string::getParentPath("/foo/bar") << std::endl;
+	std::cout << boxer::string::getBasename("/foo/bar.exe") << "==" << boxer::string::getParentPath("/foo/bar.exe") << std::endl;
+	std::cout << boxer::string::getBasename("/foo/zaza/") << "==" << boxer::string::getParentPath("/foo/zaza/") << std::endl;
+
+	exit(1);
+
 	string_t randomString = boxer::string::generateRandomString(600);
 	log_dbg("Random String");
 	log_dbg(randomString);
@@ -56,6 +68,7 @@ auto main(int argc, char **argv) -> int {
 	gzip.cleanup();
 
 	exit(1);
+#endif
 
 	string_t filename;
 	static struct option long_options[] =
@@ -104,13 +117,17 @@ auto main(int argc, char **argv) -> int {
 	log_dbg("Current Working Directory: " + string_t(cwd));
 	
 	auto fullPath = string_t(realpath(filename.c_str(), NULL));
-	log_dbg("Working Filename: " + fullPath);
+	log_dbg("Boxer File: " + fullPath);
 
 	auto parser = std::make_shared<boxer::parser::Parser>(fullPath);
 	parser->processFile();
 
 	command_list_t all_commands = parser->retrieveCommands();
-	auto executor = std::make_shared<boxer::executor::Executor>(all_commands, boxer::string::generateRandomString(128));
+	string_t temp_tar_filename = boxer::string::generateRandomString(20);
+	log_inf("Temp Tar Name = " + temp_tar_filename);
+	auto executor = std::make_shared<boxer::executor::Executor>(all_commands, temp_tar_filename , parser->getWorkingDir());
 	
+	executor->execute();
+		
 	return 0;
 }

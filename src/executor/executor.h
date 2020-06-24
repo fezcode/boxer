@@ -12,7 +12,8 @@
 namespace boxer::executor {
     class Executor {
         private:
-        string_t gzip_filename;        
+        string_t gzip_filename; 
+        string_t working_dir; 
         command_list_t all_commands;
         tar_t tar;
         
@@ -21,7 +22,7 @@ namespace boxer::executor {
         public:
         // The tar_filename is not actual file name, it will be set via ARCHIVE_NAME command at the end.
         // temp_tar_filename has default value.
-        Executor(const command_list_t & list_of_commands, string_t temp_tar_filename);
+        Executor(const command_list_t & list_of_commands, string_t temp_tar_filename, string_t working_directory);
 
         ~Executor() { log_inf("~Executor"); }
 

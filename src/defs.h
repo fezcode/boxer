@@ -38,7 +38,7 @@ using ifstream_t = std::ifstream;
 #define log_err( T ) std::cerr << CL_RED    << " " << T << CL_RESET << std::endl
 #define log_war( T ) std::cout << CL_YELLOW << " " << T << CL_RESET << std::endl
 #define log_inf( T ) std::cout << CL_GREEN  << " " << T << CL_RESET << std::endl
-#define log_dbg( T ) std::cout << CL_BLUE   << " " << T << CL_RESET << std::endl
+#define log_dbg( T ) 
 #endif
 
 // Colors

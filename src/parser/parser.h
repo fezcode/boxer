@@ -13,8 +13,10 @@ namespace boxer::parser {
 	class Parser {
 	public:
 		Parser(string_t path);
+		~Parser() { log_inf("~Parser"); }
 		auto processFile() -> bool_t;
 		auto retrieveCommands() -> command_list_t;
+		auto getWorkingDir() -> string_t;
 
 	private:
 		string_t filename;

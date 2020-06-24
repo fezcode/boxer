@@ -9,11 +9,12 @@ namespace boxer::commands::result {
 
     class CommandResult {
         private:
-        bool_t execution_result;
+        bool_t execution_result = false;
         stringvec_t payload_vec;
 
         public:
         CommandResult() { };
+        CommandResult(bool_t ExecutionResult) : execution_result(ExecutionResult) { };
         CommandResult(bool_t ExecutionResult, stringvec_t Payload) : execution_result(ExecutionResult), payload_vec(Payload) { };
         
         inline auto success() const       -> bool_t      { return execution_result; }
