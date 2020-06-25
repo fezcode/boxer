@@ -31,6 +31,12 @@ namespace boxer::commands {
 			command = std::make_shared<Add_Dir>(payload, working_dir);
 		}
 
+		
+		// ADD_DIR
+		else if (boxer::string::iequals(name,  type_str(ADD_FILE_MATCHING))) {
+			command = std::make_shared<Add_File_Matching>(payload, working_dir);
+		}
+
 		command->buildup();
 
 		return command;

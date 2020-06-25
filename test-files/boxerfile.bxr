@@ -1,0 +1,14 @@
+# File Version
+# BOXER_VERSION 1
+
+# Sets archive name.
+ARCHIVE_NAME regex_cont
+
+# Adds single file to archive
+# ADD_FILE test1.txt
+# ADD_FILE test2.txt AS pepe_pupu.txt
+
+# Adds contents of the folder.
+# ADD_DIR folder AS kool
+
+ADD_FILE_MATCHING (CONT.*) IN regex-check GET LATEST TO crazy

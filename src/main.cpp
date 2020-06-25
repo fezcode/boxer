@@ -37,6 +37,9 @@ auto getAvailableCommands()-> void {
 auto main(int argc, char **argv) -> int {
 
 #ifdef TEST_IS_REQ
+	std::cout << std::boolalpha << boxer::string::isAbsolutePath("/asdasd/sdfasdf*") << std::endl;
+	exit (0);
+
 	std::cout << std::boolalpha << boxer::string::isFilenameValid("bar") << std::endl;
 	std::cout << std::boolalpha << boxer::string::isFilenameValid("$$bilyo.ext") << std::endl;
 	

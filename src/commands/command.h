@@ -14,6 +14,7 @@ namespace boxer::commands {
 		ARCHIVE_NAME,
 		ADD_FILE,
 		ADD_DIR,
+		ADD_FILE_MATCHING,
 		COMMAND_MAX
 	};
 
@@ -24,6 +25,7 @@ namespace boxer::commands {
 		case ARCHIVE_NAME: 		return "ARCHIVE_NAME";		break;
 		case ADD_FILE: 			return "ADD_FILE";			break;
 		case ADD_DIR: 			return "ADD_DIR";			break;
+		case ADD_FILE_MATCHING: return "ADD_FILE_MATCHING";	break;
 		case COMMAND_MAX: 		return "COMMAND_MAX";		break;
 		default: 				return "ERR";	 			break;
 		}

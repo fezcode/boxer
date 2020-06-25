@@ -72,6 +72,13 @@ namespace boxer::executor {
 
         // gzip_t gzip(tar->getName(), tar->getName()+".gz");
         string_t gzip_location = working_dir + "/" + gzip_filename + ".tar.gz";
+        if (std::filesystem::exists(gzip_location)) {
+            log_err("GZIP file with same name exists in build directory.");
+            log_err("Move or rename gzip in order to proceed.");
+            log_err("You can get tar from " + tar->getName());
+            return -3;
+        }
+
         gzip_t gzip = std::make_shared<asbuzz::archiver::GZipper>(tar->getName(), gzip_location);
         
         if(!gzip->compress()) {
