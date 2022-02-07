@@ -11,7 +11,7 @@
 // 
 // MIT License
 //
-// Copyright (c) 2020 Ahmed Samil Bulbul
+// Copyright (c) 2020
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@
 
 // #include <cstdlib>
 
-namespace asbuzz::archiver {
+namespace fezcode::archiver {
 
 	struct posix_header
 	{                              /* byte offset */
@@ -131,7 +131,7 @@ namespace asbuzz::archiver {
 				if(output.is_open()) {
 					output.close();
 				}
-#ifdef ASBUZZ_ARCHIVER_DEBUG	
+#ifdef FEZCODE_ARCHIVER_DEBUG	
 				if(!finished) std::cerr << "archive creation did NOT finished properly" << std::endl;
 #endif
 			};

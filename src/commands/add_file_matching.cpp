@@ -174,6 +174,7 @@ namespace boxer::commands {
 					addFileResult &= tar->addFile(current_src, current_dst);
 				}				
 				break;
+				
 			case LATEST:
 				for (auto & p : matching_files) {
 					if (fs::last_write_time(fs::path(p)) > fs::last_write_time(fs::path(current_src))) {

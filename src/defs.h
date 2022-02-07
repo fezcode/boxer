@@ -23,8 +23,8 @@ using ifstream_t = std::ifstream;
 #define sharedPtr(T) std::shared_ptr<T>
 #define command_ptr std::shared_ptr<boxer::commands::Command>
 #define command_list_t std::list<std::shared_ptr<boxer::commands::Command>>
-#define tar_t std::shared_ptr<asbuzz::archiver::Tar>
-#define gzip_t std::shared_ptr<asbuzz::archiver::GZipper>
+#define tar_t std::shared_ptr<fezcode::archiver::Tar>
+#define gzip_t std::shared_ptr<fezcode::archiver::GZipper>
 
 
 #ifdef DEBUG

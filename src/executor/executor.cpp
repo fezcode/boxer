@@ -14,7 +14,7 @@ namespace boxer::executor {
         gzip_filename = "boxer";
         string_t tarfile = "/tmp/" + temp_tar_filename + ".tar";
         log_inf("Tar file location: " + tarfile);
-        tar = std::make_shared<asbuzz::archiver::Tar>(tarfile);
+        tar = std::make_shared<fezcode::archiver::Tar>(tarfile);
     }
 
     auto Executor::build() -> int {
@@ -79,7 +79,7 @@ namespace boxer::executor {
             return -3;
         }
 
-        gzip_t gzip = std::make_shared<asbuzz::archiver::GZipper>(tar->getName(), gzip_location);
+        gzip_t gzip = std::make_shared<fezcode::archiver::GZipper>(tar->getName(), gzip_location);
         
         if(!gzip->compress()) {
             log_err("Cannot create gzip file. Tar file is in the location. You can use it.");

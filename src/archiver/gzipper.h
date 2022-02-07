@@ -15,7 +15,7 @@
 #include <assert.h>
 #include <zlib/zlib.h>
 
-namespace asbuzz::archiver {
+namespace fezcode::archiver {
 
 #define CHUNK 16384
 #define windowBits 15
@@ -154,4 +154,4 @@ namespace asbuzz::archiver {
 		}
 	}
 		
-} // namespace asbuzz::archiver
+} // namespace fezcode::archiver
